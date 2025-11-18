@@ -71,19 +71,21 @@ export function InteractiveNebulaShader({
           float rz = map(p);
           float f  = clamp((rz - map(p + 0.1)) * 0.5, -0.1, 1.0);
           
-          // Cores escuras com pouca luminosidade azul
-          vec3 base = vec3(0.02, 0.03, 0.05) + vec3(0.3, 0.4, 0.6) * f * 0.15;
+          // Cores escuras com luminosidade azul mais aparente
+          vec3 base = vec3(0.02, 0.03, 0.05) + vec3(0.5, 0.7, 1.0) * f * 0.4;
           
-          col = col * base + smoothstep(2.5, 0.0, rz) * 0.3 * base;
+          col = col * base + smoothstep(2.5, 0.0, rz) * 0.6 * base;
           d += min(rz, 1.0);
         }
 
-        // Center dimming suave
+        // Center dimming suave - mais luminoso
         float dist   = distance(fragCoord, iResolution*0.5);
         float radius = min(iResolution.x, iResolution.y) * 0.5;
         float dim    = smoothstep(radius*0.3, radius*0.5, dist);
 
-        O = vec4(mix(col * 0.2, col, dim), 1.0);
+        // Aumenta a luminosidade geral mantendo o fundo escuro
+        col = col * 1.5;
+        O = vec4(mix(col * 0.4, col, dim), 1.0);
       }
 
       void main() {
