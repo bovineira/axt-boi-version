@@ -140,90 +140,12 @@ const Navbar = () => {
   )
 }
 
-// Componente para imagem flutuante usando background-image (mais confiável)
-const FloatingImage = ({ src, alt, className, style }: { 
-  src: string, 
-  alt: string, 
-  className?: string, 
-  style?: React.CSSProperties
-}) => {
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        backgroundImage: `url(${src})`,
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
-      role="img"
-      aria-label={alt}
-    />
-  )
-}
-
 // Componente Hero
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Nebulosa Shader - Cores escuras com pouca luminosidade azul */}
       <InteractiveNebulaShader className="z-0" />
-      {/* Imagens flutuantes */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: [0.6, 0.8, 0.6],
-          y: [0, -30, 0],
-          rotate: [0, 5, -5, 0]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute top-20 left-10 w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 z-10 hidden md:block"
-      >
-        <div className="relative w-full h-full">
-          <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" />
-          <FloatingImage
-            src="/logo-google-ads-3d.svg"
-            alt="Google Ads"
-            className="relative w-full h-full object-contain"
-            style={{ 
-              filter: 'brightness(1.1) saturate(1.1) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
-            }}
-          />
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: [0.6, 0.8, 0.6],
-          y: [0, -25, 0],
-          rotate: [0, -5, 5, 0]
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-        className="absolute top-40 right-10 w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 z-10 hidden md:block"
-      >
-        <div className="relative w-full h-full">
-          <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <FloatingImage
-            src="/logo-meta-ads-3d.svg"
-            alt="Meta Ads"
-            className="relative w-full h-full object-contain"
-            style={{ 
-              filter: 'brightness(1.1) saturate(1.1) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
-            }}
-          />
-        </div>
-      </motion.div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
