@@ -191,8 +191,7 @@ const Hero = () => {
             alt="Google Ads"
             className="relative w-full h-full object-contain"
             style={{ 
-              filter: 'brightness(1.2) saturate(1.3) hue-rotate(180deg) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
-              mixBlendMode: 'screen'
+              filter: 'brightness(1.1) saturate(1.1) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
             }}
           />
         </div>
@@ -211,7 +210,7 @@ const Hero = () => {
           ease: "easeInOut",
           delay: 1
         }}
-        className="absolute top-40 right-10 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 z-10 hidden md:block"
+        className="absolute top-40 right-10 w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 z-10 hidden md:block"
       >
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
@@ -220,8 +219,7 @@ const Hero = () => {
             alt="Meta Ads"
             className="relative w-full h-full object-contain"
             style={{ 
-              filter: 'brightness(1.2) saturate(1.3) hue-rotate(120deg) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
-              mixBlendMode: 'screen'
+              filter: 'brightness(1.1) saturate(1.1) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
             }}
           />
         </div>
