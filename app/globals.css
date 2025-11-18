@@ -67,6 +67,7 @@ body {
     position: absolute;
     inset: -3px;
     border-radius: 1rem;
+    padding: 3px;
     background: conic-gradient(
       from 0deg,
       #00f0ff,
@@ -77,29 +78,34 @@ body {
       #0066ff,
       #00f0ff
     );
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
     animation: neon-rotate 3s linear infinite;
     z-index: -1;
-    opacity: 0.9;
   }
 
   .neon-border::after {
     content: '';
     position: absolute;
-    inset: -1px;
+    inset: -4px;
     border-radius: 1rem;
-    background: linear-gradient(
-      45deg,
+    background: conic-gradient(
+      from 180deg,
       #00f0ff,
       #00ff88,
       #0066ff,
       #00f0ff,
-      #00ff88
+      #00ff88,
+      #0066ff,
+      #00f0ff
     );
-    background-size: 400% 400%;
-    animation: neon-flow 2s ease infinite;
+    animation: neon-rotate-reverse 4s linear infinite;
     z-index: -2;
-    opacity: 0.5;
-    filter: blur(10px);
+    opacity: 0.4;
+    filter: blur(12px);
   }
 
   @keyframes neon-rotate {
@@ -111,12 +117,12 @@ body {
     }
   }
 
-  @keyframes neon-flow {
-    0%, 100% {
-      background-position: 0% 50%;
+  @keyframes neon-rotate-reverse {
+    0% {
+      transform: rotate(360deg);
     }
-    50% {
-      background-position: 100% 50%;
+    100% {
+      transform: rotate(0deg);
     }
   }
 
