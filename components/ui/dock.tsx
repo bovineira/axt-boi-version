@@ -156,8 +156,12 @@ function DockItem({ children, className, onClick }: DockItemProps) {
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
+      onTouchStart={(e) => {
+        e.preventDefault()
+        onClick?.(e as any)
+      }}
       className={cn(
-        'relative inline-flex items-center justify-center cursor-pointer',
+        'relative inline-flex items-center justify-center cursor-pointer select-none',
         className
       )}
       tabIndex={0}
