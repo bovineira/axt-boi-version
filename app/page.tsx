@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import Image from 'next/image'
 
 // Componente wrapper para animações elegantes no scroll
 const ScrollAnimation = ({ children, delay = 0, className = '' }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -143,6 +144,68 @@ const Navbar = () => {
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Imagens flutuantes */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ 
+          opacity: [0.6, 0.8, 0.6],
+          y: [0, -30, 0],
+          rotate: [0, 5, -5, 0]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-20 left-10 w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 z-10 hidden md:block"
+      >
+        <div className="relative w-full h-full">
+          <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" />
+          <Image
+            src="/logo google ads 3d.png"
+            alt="Google Ads"
+            width={192}
+            height={192}
+            className="relative w-full h-full object-contain"
+            style={{ 
+              filter: 'brightness(1.2) saturate(1.3) hue-rotate(180deg) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
+              mixBlendMode: 'screen'
+            }}
+          />
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ 
+          opacity: [0.6, 0.8, 0.6],
+          y: [0, -25, 0],
+          rotate: [0, -5, 5, 0]
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+        className="absolute top-40 right-10 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 z-10 hidden md:block"
+      >
+        <div className="relative w-full h-full">
+          <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <Image
+            src="/logo meta ads 3d.png"
+            alt="Meta Ads"
+            width={176}
+            height={176}
+            className="relative w-full h-full object-contain"
+            style={{ 
+              filter: 'brightness(1.2) saturate(1.3) hue-rotate(120deg) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
+              mixBlendMode: 'screen'
+            }}
+          />
+        </div>
+      </motion.div>
+
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Coluna Esquerda - Texto */}
@@ -216,27 +279,33 @@ const Hero = () => {
           >
             <div className="glass rounded-2xl p-8 glow-cyan border border-cyan-500/30">
               <div className="flex flex-wrap gap-3 mb-6">
-                {['Google Ads', 'Meta Ads', 'TikTok Ads'].map((platform, idx) => (
+                {[
+                  { name: 'Google Ads', icon: '🔵' },
+                  { name: 'Meta Ads', icon: '🔷' },
+                  { name: 'TikTok Ads', icon: '🎵' }
+                ].map((platform, idx) => (
                   <span
                     key={idx}
-                    className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-lg text-sm font-medium text-cyan-300"
+                    className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-lg text-sm font-medium text-cyan-300 flex items-center space-x-2"
                   >
-                    {platform}
+                    <span className="text-base filter drop-shadow-[0_0_4px_rgba(0,240,255,0.8)]">{platform.icon}</span>
+                    <span>{platform.name}</span>
                   </span>
                 ))}
               </div>
               
               <div className="space-y-4">
                 {[
-                  { name: 'Google Ads', status: 'Ativa', color: 'emerald' },
-                  { name: 'Meta Ads', status: 'Pronta para usar', color: 'cyan' },
-                  { name: 'TikTok Ads', status: 'Ativa', color: 'emerald' }
+                  { name: 'Google Ads', status: 'Ativa', color: 'emerald', icon: '🔵' },
+                  { name: 'Meta Ads', status: 'Pronta para usar', color: 'cyan', icon: '🔷' },
+                  { name: 'TikTok Ads', status: 'Ativa', color: 'emerald', icon: '🎵' }
                 ].map((account, idx) => (
                   <div key={idx} className="flex items-center justify-between p-4 bg-black/30 rounded-lg border border-cyan-500/20">
                     <div className="flex items-center space-x-3">
                       <div className={`w-2 h-2 rounded-full ${
                         account.color === 'emerald' ? 'bg-emerald-400 glow-emerald' : 'bg-cyan-400 glow-cyan'
                       }`} />
+                      <span className="text-base filter drop-shadow-[0_0_4px_rgba(0,240,255,0.6)]">{account.icon}</span>
                       <span className="text-white font-medium">{account.name}</span>
                     </div>
                     <span className="text-sm text-gray-400">{account.status}</span>
