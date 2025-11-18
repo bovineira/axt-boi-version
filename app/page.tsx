@@ -139,51 +139,25 @@ const Navbar = () => {
   )
 }
 
-// Componente para imagem flutuante com fallback
-const FloatingImage = ({ src, alt, className, style, glowColor }: { 
+// Componente para imagem flutuante usando background-image (mais confiável)
+const FloatingImage = ({ src, alt, className, style }: { 
   src: string, 
   alt: string, 
   className?: string, 
-  style?: React.CSSProperties,
-  glowColor?: string 
+  style?: React.CSSProperties
 }) => {
-  const [imgSrc, setImgSrc] = useState(src)
-  const [hasError, setHasError] = useState(false)
-
-  const handleError = () => {
-    if (!hasError) {
-      setHasError(true)
-      // Tenta diferentes variações do nome e extensões
-      const variations = [
-        src,
-        src.replace('.svg', '.png'),
-        src.replace('.png', '.svg'),
-        src.replace(/-/g, ' '),
-        src.replace(/-/g, '_'),
-        encodeURI(src),
-        src.toLowerCase(),
-      ]
-      const currentIndex = variations.indexOf(imgSrc)
-      if (currentIndex < variations.length - 1) {
-        setImgSrc(variations[currentIndex + 1])
-        setHasError(false) // Reset para tentar novamente
-      }
-    }
-  }
-
-  if (hasError && imgSrc === src) {
-    return null // Não renderiza se todas as tentativas falharam
-  }
-
   return (
-    <img
-      src={imgSrc}
-      alt={alt}
+    <div
       className={className}
-      style={style}
-      loading="eager"
-      onError={handleError}
-      onLoad={() => setHasError(false)}
+      style={{
+        ...style,
+        backgroundImage: `url(${src})`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }}
+      role="img"
+      aria-label={alt}
     />
   )
 }
