@@ -59,28 +59,82 @@ body {
   .neon-border {
     position: relative;
     border-radius: 1rem;
+    isolation: isolate;
   }
 
   .neon-border::before {
     content: '';
     position: absolute;
+    inset: -3px;
+    border-radius: 1rem;
+    background: linear-gradient(
+      0deg,
+      transparent 30%,
+      #00f0ff 50%,
+      transparent 70%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 30%,
+      #00ff88 50%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 30%,
+      #0066ff 50%,
+      transparent 70%
+    ),
+    linear-gradient(
+      270deg,
+      transparent 30%,
+      #00f0ff 50%,
+      transparent 70%
+    );
+    background-size: 200% 200%;
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+    animation: neon-rotate 4s linear infinite;
+    z-index: -1;
+    opacity: 0.8;
+  }
+
+  .neon-border::after {
+    content: '';
+    position: absolute;
     inset: -2px;
     border-radius: 1rem;
-    padding: 2px;
     background: linear-gradient(
       45deg,
       #00f0ff,
       #00ff88,
       #0066ff,
       #00f0ff,
-      #00ff88
+      #00ff88,
+      #0066ff
     );
-    background-size: 300% 300%;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    background-size: 400% 400%;
     animation: neon-flow 3s ease infinite;
-    z-index: -1;
+    z-index: -2;
+    opacity: 0.6;
+    filter: blur(8px);
+  }
+
+  @keyframes neon-rotate {
+    0% {
+      background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+    }
+    25% {
+      background-position: 100% 0%, 100% 100%, 0% 100%, 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%;
+    }
+    75% {
+      background-position: 0% 100%, 0% 0%, 100% 0%, 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+    }
   }
 
   @keyframes neon-flow {
@@ -94,10 +148,10 @@ body {
 
   .neon-border-glow {
     box-shadow: 
-      0 0 10px rgba(0, 240, 255, 0.5),
-      0 0 20px rgba(0, 255, 136, 0.3),
-      0 0 30px rgba(0, 102, 255, 0.2),
-      inset 0 0 10px rgba(0, 240, 255, 0.1);
+      0 0 15px rgba(0, 240, 255, 0.6),
+      0 0 30px rgba(0, 255, 136, 0.4),
+      0 0 45px rgba(0, 102, 255, 0.3),
+      inset 0 0 15px rgba(0, 240, 255, 0.15);
   }
 }
 
