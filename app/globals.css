@@ -67,41 +67,25 @@ body {
     position: absolute;
     inset: -3px;
     border-radius: 1rem;
-    background: linear-gradient(
-      0deg,
-      transparent 30%,
-      #00f0ff 50%,
-      transparent 70%
-    ),
-    linear-gradient(
-      90deg,
-      transparent 30%,
-      #00ff88 50%,
-      transparent 70%
-    ),
-    linear-gradient(
-      180deg,
-      transparent 30%,
-      #0066ff 50%,
-      transparent 70%
-    ),
-    linear-gradient(
-      270deg,
-      transparent 30%,
-      #00f0ff 50%,
-      transparent 70%
+    background: conic-gradient(
+      from 0deg,
+      #00f0ff,
+      #00ff88,
+      #0066ff,
+      #00f0ff,
+      #00ff88,
+      #0066ff,
+      #00f0ff
     );
-    background-size: 200% 200%;
-    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
-    animation: neon-rotate 4s linear infinite;
+    animation: neon-rotate 3s linear infinite;
     z-index: -1;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   .neon-border::after {
     content: '';
     position: absolute;
-    inset: -2px;
+    inset: -1px;
     border-radius: 1rem;
     background: linear-gradient(
       45deg,
@@ -109,31 +93,21 @@ body {
       #00ff88,
       #0066ff,
       #00f0ff,
-      #00ff88,
-      #0066ff
+      #00ff88
     );
     background-size: 400% 400%;
-    animation: neon-flow 3s ease infinite;
+    animation: neon-flow 2s ease infinite;
     z-index: -2;
-    opacity: 0.6;
-    filter: blur(8px);
+    opacity: 0.5;
+    filter: blur(10px);
   }
 
   @keyframes neon-rotate {
     0% {
-      background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
-    }
-    25% {
-      background-position: 100% 0%, 100% 100%, 0% 100%, 0% 0%;
-    }
-    50% {
-      background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%;
-    }
-    75% {
-      background-position: 0% 100%, 0% 0%, 100% 0%, 100% 100%;
+      transform: rotate(0deg);
     }
     100% {
-      background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+      transform: rotate(360deg);
     }
   }
 
@@ -148,10 +122,10 @@ body {
 
   .neon-border-glow {
     box-shadow: 
-      0 0 15px rgba(0, 240, 255, 0.6),
-      0 0 30px rgba(0, 255, 136, 0.4),
-      0 0 45px rgba(0, 102, 255, 0.3),
-      inset 0 0 15px rgba(0, 240, 255, 0.15);
+      0 0 20px rgba(0, 240, 255, 0.7),
+      0 0 40px rgba(0, 255, 136, 0.5),
+      0 0 60px rgba(0, 102, 255, 0.3),
+      inset 0 0 20px rgba(0, 240, 255, 0.2);
   }
 }
 
