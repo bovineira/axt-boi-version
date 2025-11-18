@@ -198,7 +198,7 @@ function DockLabel({ children, className, ...rest }: DockLabelProps) {
           exit={{ opacity: 0, y: 0 }}
           transition={{ duration: 0.2 }}
           className={cn(
-            'absolute -top-6 left-1/2 w-fit whitespace-pre rounded-md border border-cyan-500/30 bg-black/80 backdrop-blur-xl px-2 py-0.5 text-xs text-cyan-300',
+            'absolute -top-6 left-1/2 w-fit whitespace-pre rounded-md border border-cyan-500/30 bg-black/80 backdrop-blur-xl px-2 py-0.5 text-xs text-cyan-300 hidden md:block',
             className
           )}
           role='tooltip'
