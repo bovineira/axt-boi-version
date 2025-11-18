@@ -885,6 +885,7 @@ export default function Home() {
       <BackgroundLights />
       <Navbar />
       <Hero />
+      <PlatformSelector />
       <CredibilityBar />
       <Products />
       <HowItWorks />
