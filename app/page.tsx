@@ -954,9 +954,12 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-3 h-3 bg-cyan-400 rounded-full glow-cyan" />
-              <span className="text-xl font-bold">Nebula Contingency Ads</span>
+            <div className="flex items-center mb-4">
+              <img 
+                src="/LOGO.png" 
+                alt="Nebula Contingency Ads" 
+                className="h-8 w-auto object-contain brightness-0 invert"
+              />
             </div>
             <p className="text-sm text-gray-400">
               Contas e infraestrutura para sua mídia paga não parar.
