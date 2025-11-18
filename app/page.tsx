@@ -77,9 +77,12 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-cyan-400 rounded-full glow-cyan animate-glow-pulse" />
-            <span className="text-xl font-bold text-white">Nebula Contingency Ads</span>
+          <div className="flex items-center">
+            <img 
+              src="/LOGO.png" 
+              alt="Nebula Contingency Ads" 
+              className="h-10 w-auto object-contain"
+            />
           </div>
 
           {/* Links Desktop */}
