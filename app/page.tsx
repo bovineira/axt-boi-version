@@ -740,7 +740,7 @@ const FinalCTA = () => {
           >
             Falar com o time agora
           </motion.button>
-        </motion.div>
+        </ScrollAnimation>
       </div>
     </section>
   )
