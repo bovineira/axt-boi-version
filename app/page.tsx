@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { InteractiveNebulaShader } from '@/components/ui/liquid-shader'
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 // Componente wrapper para animações elegantes no scroll
 const ScrollAnimation = ({ children, delay = 0, className = '' }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -443,6 +444,14 @@ const Products = () => {
                     : 'border border-emerald-500/30 glow-emerald'
                 }`}
               >
+                <GlowingEffect
+                  spread={40}
+                  glow={true}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
               {product.tag && (
                 <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/30 border border-emerald-500/50 rounded-full text-xs font-semibold text-emerald-300">
                   {product.tag}
@@ -527,7 +536,15 @@ const HowItWorks = () => {
               {idx < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-cyan-500/50 to-transparent" style={{ width: 'calc(100% - 4rem)' }} />
               )}
-              <div className="glass rounded-2xl p-6 border border-cyan-500/30 h-full">
+              <div className="glass rounded-2xl p-6 border border-cyan-500/30 h-full relative">
+                <GlowingEffect
+                  spread={30}
+                  glow={true}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
                 <div className="text-5xl font-bold text-cyan-400/30 mb-4">{step.number}</div>
                 <h3 className="text-xl font-bold mb-3">{step.title}</h3>
                 <p className="text-gray-300 text-sm leading-relaxed">{step.description}</p>
@@ -691,8 +708,16 @@ const Differentiators = () => {
               <motion.div
                 whileHover={{ scale: 1.05, y: -5, rotateY: 2 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="glass rounded-2xl p-6 border border-cyan-500/30 text-center transition-all duration-300"
+                className="glass rounded-2xl p-6 border border-cyan-500/30 text-center transition-all duration-300 relative"
               >
+                <GlowingEffect
+                  spread={30}
+                  glow={true}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
               <div className="text-4xl mb-4">{item.icon}</div>
               <h3 className="text-xl font-bold mb-3 text-cyan-400">{item.title}</h3>
               <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
