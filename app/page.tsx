@@ -1,7 +1,29 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+
+// Componente wrapper para animações elegantes no scroll
+const ScrollAnimation = ({ children, delay = 0, className = '' }: { children: React.ReactNode, delay?: number, className?: string }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60, scale: 0.95 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.95 }}
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: [0.25, 0.46, 0.45, 0.94] // easing suave e elegante
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 // Componente de Background com efeitos de luz
 const BackgroundLights = () => {
@@ -139,10 +161,10 @@ const Hero = () => {
             
             <ul className="space-y-4">
               {[
-                'Contas prontas para rodar em alto volume',
-                'Proxies residenciais já configurados',
-                'Menos risco de ban, mais estabilidade',
-                'Onboarding guiado pelo nosso time'
+                { text: 'Contas prontas para rodar em alto volume', icon: '🚀' },
+                { text: 'Proxies residenciais já configurados', icon: '🌐' },
+                { text: 'Menos risco de ban, mais estabilidade', icon: '🛡️' },
+                { text: 'Onboarding guiado pelo nosso time', icon: '👥' }
               ].map((item, idx) => (
                 <motion.li
                   key={idx}
@@ -151,8 +173,18 @@ const Hero = () => {
                   transition={{ delay: 0.3 + idx * 0.1 }}
                   className="flex items-center space-x-3"
                 >
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full glow-emerald" />
-                  <span className="text-gray-300">{item}</span>
+                  <motion.div
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ delay: 0.4 + idx * 0.1, type: 'spring', stiffness: 200 }}
+                    className="relative flex-shrink-0"
+                  >
+                    <div className="absolute inset-0 bg-cyan-400/30 rounded-full blur-md animate-pulse" />
+                    <div className="relative w-6 h-6 flex items-center justify-center text-lg filter drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
+                      {item.icon}
+                    </div>
+                  </motion.div>
+                  <span className="text-gray-300">{item.text}</span>
                 </motion.li>
               ))}
             </ul>
@@ -239,17 +271,29 @@ const CredibilityBar = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="text-center space-y-2"
-            >
-              <div className="text-3xl mb-2">{item.icon}</div>
-              <p className="text-sm text-gray-300">{item.text}</p>
-            </motion.div>
+            <ScrollAnimation key={idx} delay={idx * 0.1}>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="text-center space-y-2 transition-all duration-300"
+              >
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: "easeInOut"
+                  }}
+                  className="text-3xl mb-2 inline-block"
+                >
+                  {item.icon}
+                </motion.div>
+                <p className="text-sm text-gray-300">{item.text}</p>
+              </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
       </div>
@@ -314,35 +358,27 @@ const Products = () => {
   return (
     <section id="produtos" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <ScrollAnimation className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Nossos principais produtos</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Tudo que você precisa para manter suas campanhas rodando sem parar.
           </p>
-        </motion.div>
+        </ScrollAnimation>
 
         <div className="grid md:grid-cols-2 gap-8">
           {products.map((product, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              whileHover={{ scale: 1.02, y: -5 }}
-              className={`glass rounded-2xl p-8 relative overflow-hidden ${
-                product.glow === 'cyan' 
-                  ? 'border border-cyan-500/30 glow-cyan' 
-                  : product.glow === 'blue'
-                  ? 'border border-blue-500/30 glow-blue'
-                  : 'border border-emerald-500/30 glow-emerald'
-              }`}
-            >
+            <ScrollAnimation key={idx} delay={idx * 0.15}>
+              <motion.div
+                whileHover={{ scale: 1.02, y: -8, rotateY: 2 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className={`glass rounded-2xl p-8 relative overflow-hidden transition-all duration-500 ${
+                  product.glow === 'cyan' 
+                    ? 'border border-cyan-500/30 glow-cyan' 
+                    : product.glow === 'blue'
+                    ? 'border border-blue-500/30 glow-blue'
+                    : 'border border-emerald-500/30 glow-emerald'
+                }`}
+              >
               {product.tag && (
                 <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/30 border border-emerald-500/50 rounded-full text-xs font-semibold text-emerald-300">
                   {product.tag}
@@ -377,7 +413,8 @@ const Products = () => {
               >
                 {product.cta}
               </motion.button>
-            </motion.div>
+              </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
       </div>
@@ -413,28 +450,16 @@ const HowItWorks = () => {
   return (
     <section id="como-funciona" className="py-24 px-4 sm:px-6 lg:px-8 bg-black/20">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <ScrollAnimation className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Como funciona na prática</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Um processo simples e rápido para você ter suas contas de contingência funcionando.
           </p>
-        </motion.div>
+        </ScrollAnimation>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="relative"
-            >
+            <ScrollAnimation key={idx} delay={idx * 0.15} className="relative">
               {idx < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-cyan-500/50 to-transparent" style={{ width: 'calc(100% - 4rem)' }} />
               )}
@@ -443,7 +468,7 @@ const HowItWorks = () => {
                 <h3 className="text-xl font-bold mb-3">{step.title}</h3>
                 <p className="text-gray-300 text-sm leading-relaxed">{step.description}</p>
               </div>
-            </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
       </div>
@@ -457,12 +482,7 @@ const Community = () => {
     <section id="comunidade" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
+          <ScrollAnimation className="space-y-6">
             <h2 className="text-4xl sm:text-5xl font-bold text-glow">Comunidade Nebula</h2>
             <p className="text-xl text-gray-300">
               Entre em um grupo de operadores de mídia que vivem contingência todos os dias.
@@ -484,14 +504,9 @@ const Community = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </ScrollAnimation>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="glass rounded-2xl p-8 border border-cyan-500/30 glow-cyan"
-          >
+          <ScrollAnimation delay={0.2} className="glass rounded-2xl p-8 border border-cyan-500/30 glow-cyan">
             <div className="space-y-4">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full flex items-center justify-center">
@@ -518,7 +533,7 @@ const Community = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </ScrollAnimation>
         </div>
       </div>
     </section>
@@ -531,18 +546,13 @@ const InstagramBoost = () => {
     <section id="instagram" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-black via-slate-950 to-blue-950 relative overflow-hidden">
       <div className="absolute inset-0 bg-cyan-500/5" />
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <ScrollAnimation className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Turbine o Instagram do seu negócio</h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Impulsione a percepção de autoridade do seu perfil com crescimento de seguidores e métricas sociais. 
             Ideal para lançadores, infoprodutores, e-commerces e negócios locais que precisam parecer mais sólidos desde o primeiro contato.
           </p>
-        </motion.div>
+        </ScrollAnimation>
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           {[
@@ -550,26 +560,19 @@ const InstagramBoost = () => {
             { title: 'Perfil mais atrativo', description: 'Aumente a atratividade do seu perfil para novos visitantes.' },
             { title: 'Maior confiança de novos visitantes', description: 'Primeira impressão é fundamental no mundo digital.' }
           ].map((benefit, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="glass rounded-xl p-6 border border-cyan-500/30 text-center"
-            >
+            <ScrollAnimation key={idx} delay={idx * 0.15}>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="glass rounded-xl p-6 border border-cyan-500/30 text-center transition-all duration-300"
+              >
               <h3 className="text-xl font-bold mb-3 text-cyan-400">{benefit.title}</h3>
               <p className="text-gray-300 text-sm">{benefit.description}</p>
-            </motion.div>
+              </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
+        <ScrollAnimation delay={0.3} className="text-center">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -577,7 +580,7 @@ const InstagramBoost = () => {
           >
             Quero impulsionar meu perfil agora
           </motion.button>
-        </motion.div>
+        </ScrollAnimation>
       </div>
     </section>
   )
@@ -611,33 +614,26 @@ const Differentiators = () => {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <ScrollAnimation className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Por que escolher a Nebula</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Diferenciais que fazem a diferença na hora de proteger suas campanhas.
           </p>
-        </motion.div>
+        </ScrollAnimation>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {items.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="glass rounded-2xl p-6 border border-cyan-500/30 text-center"
-            >
+            <ScrollAnimation key={idx} delay={idx * 0.15}>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5, rotateY: 2 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="glass rounded-2xl p-6 border border-cyan-500/30 text-center transition-all duration-300"
+              >
               <div className="text-4xl mb-4">{item.icon}</div>
               <h3 className="text-xl font-bold mb-3 text-cyan-400">{item.title}</h3>
               <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
-            </motion.div>
+              </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
       </div>
@@ -675,28 +671,20 @@ const FAQ = () => {
   return (
     <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-black/20">
       <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <ScrollAnimation className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Perguntas frequentes</h2>
           <p className="text-xl text-gray-300">
             Tire suas dúvidas sobre nossas contas de contingência.
           </p>
-        </motion.div>
+        </ScrollAnimation>
 
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="glass rounded-xl border border-cyan-500/30 overflow-hidden"
-            >
+            <ScrollAnimation key={idx} delay={idx * 0.1}>
+              <motion.div
+                whileHover={{ scale: 1.01, x: 5 }}
+                className="glass rounded-xl border border-cyan-500/30 overflow-hidden transition-all duration-300"
+              >
               <button
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                 className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-cyan-500/5 transition-colors"
@@ -723,7 +711,8 @@ const FAQ = () => {
                   {faq.answer}
                 </motion.div>
               )}
-            </motion.div>
+              </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
       </div>
@@ -737,12 +726,7 @@ const FinalCTA = () => {
     <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-emerald-500/20 to-blue-500/20 blur-3xl" />
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
+        <ScrollAnimation className="space-y-8">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-glow">
             Pronto para blindar suas campanhas?
           </h2>
