@@ -48,11 +48,11 @@ export function Nebula({
         )
       })}
 
-      {/* Camada externa da nebulosa - Vermelho/Laranja (pálpebra) */}
+      {/* Camada externa da nebulosa - Azul escuro/luminoso */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255, 100, 0, 0.15) 30%, rgba(255, 50, 0, 0.25) 50%, rgba(200, 0, 100, 0.2) 70%, transparent 100%)',
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 102, 255, 0.2) 30%, rgba(0, 150, 255, 0.25) 50%, rgba(0, 200, 255, 0.2) 70%, transparent 100%)',
           filter: 'blur(100px)',
         }}
         animate={{
@@ -66,11 +66,11 @@ export function Nebula({
         }}
       />
 
-      {/* Camada média da nebulosa - Transição */}
+      {/* Camada média da nebulosa - Transição azul/ciano */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255, 150, 0, 0.1) 40%, rgba(0, 200, 255, 0.15) 60%, transparent 80%)',
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 150, 255, 0.15) 40%, rgba(0, 240, 255, 0.2) 60%, rgba(0, 255, 255, 0.15) 80%, transparent 100%)',
           filter: 'blur(80px)',
         }}
         animate={{
@@ -84,7 +84,7 @@ export function Nebula({
         }}
       />
 
-      {/* Anel interno brilhante - Azul/Ciano (íris) */}
+      {/* Anel interno brilhante - Azul/Ciano intenso */}
       <motion.div
         className="absolute rounded-full pointer-events-none"
         style={{
@@ -93,7 +93,7 @@ export function Nebula({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(ellipse at center, rgba(0, 240, 255, 0.4) 0%, rgba(0, 255, 136, 0.3) 30%, rgba(255, 200, 0, 0.2) 50%, rgba(255, 100, 0, 0.15) 70%, transparent 100%)',
+          background: 'radial-gradient(ellipse at center, rgba(0, 240, 255, 0.5) 0%, rgba(0, 255, 255, 0.4) 30%, rgba(0, 200, 255, 0.3) 50%, rgba(0, 150, 255, 0.2) 70%, transparent 100%)',
           filter: 'blur(60px)',
         }}
         animate={{
@@ -107,7 +107,7 @@ export function Nebula({
         }}
       />
 
-      {/* Anel de gás brilhante interno - Mais intenso */}
+      {/* Anel de gás brilhante interno - Mais intenso azul/ciano */}
       <motion.div
         className="absolute rounded-full pointer-events-none"
         style={{
@@ -116,7 +116,7 @@ export function Nebula({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(ellipse at center, rgba(0, 240, 255, 0.6) 0%, rgba(0, 255, 255, 0.5) 20%, rgba(0, 255, 136, 0.4) 40%, rgba(255, 200, 0, 0.3) 60%, transparent 90%)',
+          background: 'radial-gradient(ellipse at center, rgba(0, 240, 255, 0.7) 0%, rgba(0, 255, 255, 0.6) 20%, rgba(0, 255, 136, 0.5) 40%, rgba(0, 200, 255, 0.4) 60%, transparent 90%)',
           filter: 'blur(40px)',
         }}
         animate={{
@@ -185,7 +185,7 @@ export function Nebula({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'conic-gradient(from 0deg, transparent 0%, rgba(0, 240, 255, 0.4) 15%, rgba(0, 255, 136, 0.5) 30%, rgba(0, 240, 255, 0.4) 45%, transparent 60%, rgba(255, 100, 0, 0.3) 75%, rgba(255, 150, 0, 0.4) 90%, transparent 100%)',
+          background: 'conic-gradient(from 0deg, transparent 0%, rgba(0, 240, 255, 0.5) 15%, rgba(0, 255, 255, 0.6) 30%, rgba(0, 240, 255, 0.5) 45%, transparent 60%, rgba(0, 200, 255, 0.4) 75%, rgba(0, 150, 255, 0.5) 90%, transparent 100%)',
           filter: 'blur(8px)',
         }}
         animate={{
@@ -207,7 +207,7 @@ export function Nebula({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'conic-gradient(from 180deg, transparent 0%, rgba(0, 240, 255, 0.3) 20%, rgba(0, 255, 136, 0.4) 40%, rgba(255, 100, 0, 0.3) 60%, rgba(255, 150, 0, 0.35) 80%, transparent 100%)',
+          background: 'conic-gradient(from 180deg, transparent 0%, rgba(0, 240, 255, 0.4) 20%, rgba(0, 255, 255, 0.5) 40%, rgba(0, 200, 255, 0.4) 60%, rgba(0, 150, 255, 0.45) 80%, transparent 100%)',
           filter: 'blur(10px)',
         }}
         animate={{
@@ -229,7 +229,7 @@ export function Nebula({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'conic-gradient(from 180deg, transparent 0%, rgba(255, 100, 0, 0.2) 20%, rgba(255, 150, 0, 0.3) 40%, rgba(0, 240, 255, 0.2) 60%, rgba(0, 255, 136, 0.25) 80%, transparent 100%)',
+          background: 'conic-gradient(from 180deg, transparent 0%, rgba(0, 150, 255, 0.3) 20%, rgba(0, 200, 255, 0.4) 40%, rgba(0, 240, 255, 0.3) 60%, rgba(0, 255, 255, 0.35) 80%, transparent 100%)',
           filter: 'blur(12px)',
         }}
         animate={{
@@ -251,7 +251,7 @@ export function Nebula({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(circle, transparent 0%, rgba(0, 240, 255, 0.08) 30%, rgba(0, 255, 136, 0.06) 50%, rgba(255, 100, 0, 0.04) 70%, transparent 100%)',
+          background: 'radial-gradient(circle, transparent 0%, rgba(0, 240, 255, 0.1) 30%, rgba(0, 255, 255, 0.08) 50%, rgba(0, 200, 255, 0.06) 70%, transparent 100%)',
           filter: 'blur(50px)',
         }}
         animate={{
@@ -280,7 +280,7 @@ export function Nebula({
               left: '50%',
               top: '50%',
               transformOrigin: 'top center',
-              background: `linear-gradient(to bottom, rgba(0, 240, 255, 0.4), rgba(0, 255, 136, 0.3), rgba(255, 100, 0, 0.2), transparent)`,
+              background: `linear-gradient(to bottom, rgba(0, 240, 255, 0.5), rgba(0, 255, 255, 0.4), rgba(0, 200, 255, 0.3), transparent)`,
               filter: 'blur(2px)',
             }}
             animate={{
@@ -306,8 +306,8 @@ export function Nebula({
             height: Math.random() * 3 + 1,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            background: i % 4 === 0 ? '#00f0ff' : i % 4 === 1 ? '#00ff88' : i % 4 === 2 ? '#ff6400' : '#ffffff',
-            boxShadow: `0 0 ${Math.random() * 8 + 4}px ${i % 4 === 0 ? '#00f0ff' : i % 4 === 1 ? '#00ff88' : i % 4 === 2 ? '#ff6400' : '#ffffff'}`,
+            background: i % 3 === 0 ? '#00f0ff' : i % 3 === 1 ? '#00ffff' : '#0096ff',
+            boxShadow: `0 0 ${Math.random() * 8 + 4}px ${i % 3 === 0 ? '#00f0ff' : i % 3 === 1 ? '#00ffff' : '#0096ff'}`,
           }}
           animate={{
             opacity: [0.2, 0.8, 0.2],
