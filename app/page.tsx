@@ -324,6 +324,100 @@ const Hero = () => {
   )
 }
 
+// Seção Escolha de Plataforma
+const PlatformSelector = () => {
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black/10">
+      <div className="max-w-7xl mx-auto">
+        <ScrollAnimation className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-glow">
+            Escolha sua plataforma
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
+            Selecione a conta de contingência que você precisa
+          </p>
+        </ScrollAnimation>
+
+        <div className="flex justify-center">
+          <Dock className="items-end pb-3">
+            {[
+              {
+                title: 'Google Ads',
+                icon: <Search className="h-full w-full text-white" />,
+                gradient: 'from-blue-500/20 via-cyan-500/20 to-blue-500/20',
+                borderColor: 'border-blue-500/50',
+                onClick: () => {
+                  const element = document.getElementById('produtos')
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }
+              },
+              {
+                title: 'Meta Ads',
+                icon: <Facebook className="h-full w-full text-white" />,
+                gradient: 'from-blue-500/20 via-cyan-500/20 to-emerald-500/20',
+                borderColor: 'border-cyan-500/50',
+                onClick: () => {
+                  const element = document.getElementById('produtos')
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }
+              },
+              {
+                title: 'TikTok Ads',
+                icon: <Music2 className="h-full w-full text-white" />,
+                gradient: 'from-cyan-500/20 via-emerald-500/20 to-cyan-500/20',
+                borderColor: 'border-emerald-500/50',
+                onClick: () => {
+                  const element = document.getElementById('produtos')
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }
+              },
+              {
+                title: 'Instagram',
+                icon: <Instagram className="h-full w-full text-white" />,
+                gradient: 'from-purple-500/20 via-pink-500/20 to-orange-500/20',
+                borderColor: 'border-pink-500/50',
+                onClick: () => {
+                  const element = document.getElementById('produtos')
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }
+              }
+            ].map((item, idx) => (
+              <DockItem
+                key={idx}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  item.onClick()
+                }}
+                className={`aspect-square rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-xl border ${item.borderColor} glass relative overflow-hidden touch-none`}
+              >
+                <GlowingEffect
+                  spread={30}
+                  glow={true}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
+                <DockLabel>{item.title}</DockLabel>
+                <DockIcon>{item.icon}</DockIcon>
+              </DockItem>
+            ))}
+          </Dock>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // Faixa de Credibilidade
 const CredibilityBar = () => {
   const items = [
