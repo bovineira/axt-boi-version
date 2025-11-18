@@ -1,96 +1,17 @@
 'use client'
 
-import { useRef, useState, useCallback, useEffect } from 'react'
-import { motion, useSpring, useTransform, SpringOptions, MotionValue } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 type NebulaProps = {
   className?: string
-  intensity?: number
-  springOptions?: SpringOptions
-}
-
-// Componente para o anel de accretion rotativo
-function AccretionRing({ 
-  blackHoleX, 
-  blackHoleY, 
-  isHovered,
-  size = 250
-}: { 
-  blackHoleX: MotionValue<number>
-  blackHoleY: MotionValue<number>
-  isHovered: boolean
-  size?: number
-}) {
-  return (
-    <motion.div
-      className="absolute rounded-full pointer-events-none"
-      style={{
-        width: size,
-        height: size,
-        left: blackHoleX,
-        top: blackHoleY,
-        transform: 'translate(-50%, -50%)',
-        background: 'conic-gradient(from 0deg, transparent 0%, rgba(0, 240, 255, 0.4) 15%, rgba(0, 255, 136, 0.5) 30%, rgba(0, 240, 255, 0.4) 45%, transparent 60%, rgba(255, 100, 0, 0.3) 75%, rgba(255, 150, 0, 0.4) 90%, transparent 100%)',
-        filter: 'blur(8px)',
-        opacity: isHovered ? 0.8 : 0.5,
-      }}
-      animate={{
-        rotate: [0, 360],
-      }}
-      transition={{
-        duration: 30,
-        repeat: Infinity,
-        ease: 'linear',
-      }}
-    />
-  )
 }
 
 export function Nebula({
   className,
-  intensity = 1,
-  springOptions = { stiffness: 150, damping: 15 },
 }: NebulaProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
-
-  const mouseX = useSpring(0, springOptions)
-  const mouseY = useSpring(0, springOptions)
-
-  const blackHoleX = useTransform(mouseX, (x) => x)
-  const blackHoleY = useTransform(mouseY, (y) => y)
-
-  const handleMouseMove = useCallback(
-    (event: MouseEvent) => {
-      if (!containerRef.current) return
-      const rect = containerRef.current.getBoundingClientRect()
-      const x = event.clientX - rect.left
-      const y = event.clientY - rect.top
-      mouseX.set(x)
-      mouseY.set(y)
-    },
-    [mouseX, mouseY]
-  )
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    container.addEventListener('mousemove', handleMouseMove)
-    container.addEventListener('mouseenter', () => setIsHovered(true))
-    container.addEventListener('mouseleave', () => setIsHovered(false))
-
-    return () => {
-      container.removeEventListener('mousemove', handleMouseMove)
-      container.removeEventListener('mouseenter', () => setIsHovered(true))
-      container.removeEventListener('mouseleave', () => setIsHovered(false))
-    }
-  }, [handleMouseMove])
-
   return (
     <div
-      ref={containerRef}
       className={cn('absolute inset-0 overflow-hidden', className)}
     >
       {/* Fundo estrelado */}
@@ -209,18 +130,26 @@ export function Nebula({
         }}
       />
 
-      {/* Buraco Negro Central - Pupila escura */}
+      {/* Buraco Negro Central - Fixo no centro */}
       <motion.div
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: 180,
-          height: 180,
-          left: blackHoleX,
-          top: blackHoleY,
+          width: 200,
+          height: 200,
+          left: '50%',
+          top: '50%',
           transform: 'translate(-50%, -50%)',
           background: 'radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.3) 70%, transparent 100%)',
           filter: 'blur(15px)',
-          opacity: isHovered ? 0.9 : 0.7,
+        }}
+        animate={{
+          scale: [1, 1.05, 1],
+          opacity: [0.7, 0.85, 0.7],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: 'easeInOut',
         }}
       />
 
@@ -230,12 +159,11 @@ export function Nebula({
         style={{
           width: 4,
           height: 4,
-          left: blackHoleX,
-          top: blackHoleY,
+          left: '50%',
+          top: '50%',
           transform: 'translate(-50%, -50%)',
           background: '#00f0ff',
           boxShadow: '0 0 20px #00f0ff, 0 0 40px rgba(0, 240, 255, 0.5)',
-          opacity: isHovered ? 1 : 0.6,
         }}
         animate={{
           scale: [1, 1.5, 1],
@@ -249,19 +177,47 @@ export function Nebula({
       />
 
       {/* Anel de Accretion 1 - Interno */}
-      <AccretionRing
-        blackHoleX={blackHoleX}
-        blackHoleY={blackHoleY}
-        isHovered={isHovered}
-        size={220}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: 220,
+          height: 220,
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: 'conic-gradient(from 0deg, transparent 0%, rgba(0, 240, 255, 0.4) 15%, rgba(0, 255, 136, 0.5) 30%, rgba(0, 240, 255, 0.4) 45%, transparent 60%, rgba(255, 100, 0, 0.3) 75%, rgba(255, 150, 0, 0.4) 90%, transparent 100%)',
+          filter: 'blur(8px)',
+        }}
+        animate={{
+          rotate: [0, 360],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
       />
 
       {/* Anel de Accretion 2 - Médio */}
-      <AccretionRing
-        blackHoleX={blackHoleX}
-        blackHoleY={blackHoleY}
-        isHovered={isHovered}
-        size={280}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: 280,
+          height: 280,
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: 'conic-gradient(from 180deg, transparent 0%, rgba(0, 240, 255, 0.3) 20%, rgba(0, 255, 136, 0.4) 40%, rgba(255, 100, 0, 0.3) 60%, rgba(255, 150, 0, 0.35) 80%, transparent 100%)',
+          filter: 'blur(10px)',
+        }}
+        animate={{
+          rotate: [360, 0],
+        }}
+        transition={{
+          duration: 35,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
       />
 
       {/* Anel de Accretion 3 - Externo */}
@@ -270,12 +226,11 @@ export function Nebula({
         style={{
           width: 350,
           height: 350,
-          left: blackHoleX,
-          top: blackHoleY,
+          left: '50%',
+          top: '50%',
           transform: 'translate(-50%, -50%)',
           background: 'conic-gradient(from 180deg, transparent 0%, rgba(255, 100, 0, 0.2) 20%, rgba(255, 150, 0, 0.3) 40%, rgba(0, 240, 255, 0.2) 60%, rgba(0, 255, 136, 0.25) 80%, transparent 100%)',
           filter: 'blur(12px)',
-          opacity: isHovered ? 0.4 : 0.2,
         }}
         animate={{
           rotate: [360, 0],
@@ -293,12 +248,20 @@ export function Nebula({
         style={{
           width: 400,
           height: 400,
-          left: blackHoleX,
-          top: blackHoleY,
+          left: '50%',
+          top: '50%',
           transform: 'translate(-50%, -50%)',
           background: 'radial-gradient(circle, transparent 0%, rgba(0, 240, 255, 0.08) 30%, rgba(0, 255, 136, 0.06) 50%, rgba(255, 100, 0, 0.04) 70%, transparent 100%)',
           filter: 'blur(50px)',
-          opacity: isHovered ? 0.6 : 0.3,
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: 'easeInOut',
         }}
       />
 
@@ -314,12 +277,11 @@ export function Nebula({
             style={{
               width: 3,
               height: radius,
-              left: blackHoleX,
-              top: blackHoleY,
+              left: '50%',
+              top: '50%',
               transformOrigin: 'top center',
               background: `linear-gradient(to bottom, rgba(0, 240, 255, 0.4), rgba(0, 255, 136, 0.3), rgba(255, 100, 0, 0.2), transparent)`,
               filter: 'blur(2px)',
-              opacity: 0.3,
             }}
             animate={{
               rotate: [angle, angle + 360],
