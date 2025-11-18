@@ -1,0 +1,825 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+
+// Componente de Background com efeitos de luz
+const BackgroundLights = () => {
+  return (
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      {/* Gradiente de fundo */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-950 to-blue-950" />
+      
+      {/* Pontos de luz grandes */}
+      <div className="absolute top-20 left-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-float" />
+      <div className="absolute top-60 right-20 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }} />
+      
+      {/* Partículas menores */}
+      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400 rounded-full blur-sm" />
+      <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-emerald-400 rounded-full blur-sm" />
+      <div className="absolute bottom-1/4 left-1/2 w-2 h-2 bg-cyan-300 rounded-full blur-sm" />
+      <div className="absolute top-2/3 right-1/4 w-2 h-2 bg-emerald-300 rounded-full blur-sm" />
+      
+      {/* Linhas de gradiente */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+    </div>
+  )
+}
+
+// Componente Navbar
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 z-50 glass transition-all duration-300 ${
+        scrolled ? 'bg-black/60' : 'bg-black/40'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-cyan-400 rounded-full glow-cyan animate-glow-pulse" />
+            <span className="text-xl font-bold text-white">Nebula Contingency Ads</span>
+          </div>
+
+          {/* Links Desktop */}
+          <div className="hidden lg:flex items-center space-x-8">
+            <a href="#produtos" className="text-gray-300 hover:text-cyan-400 transition-colors">Produtos</a>
+            <a href="#contas" className="text-gray-300 hover:text-cyan-400 transition-colors">Contas de Ads</a>
+            <a href="#instagram" className="text-gray-300 hover:text-cyan-400 transition-colors">Turbinar Instagram</a>
+            <a href="#comunidade" className="text-gray-300 hover:text-cyan-400 transition-colors">Comunidade</a>
+            <a href="#como-funciona" className="text-gray-300 hover:text-cyan-400 transition-colors">Como funciona</a>
+            <a href="#faq" className="text-gray-300 hover:text-cyan-400 transition-colors">FAQ</a>
+          </div>
+
+          {/* Botão CTA Desktop */}
+          <div className="hidden lg:block">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold rounded-lg glow-cyan transition-all"
+            >
+              Falar com o time
+            </motion.button>
+          </div>
+
+          {/* Menu Mobile */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden text-white p-2"
+            aria-label="Menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+
+        {/* Menu Mobile Overlay */}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden pb-6 space-y-4"
+          >
+            <a href="#produtos" className="block text-gray-300 hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Produtos</a>
+            <a href="#contas" className="block text-gray-300 hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Contas de Ads</a>
+            <a href="#instagram" className="block text-gray-300 hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Turbinar Instagram</a>
+            <a href="#comunidade" className="block text-gray-300 hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Comunidade</a>
+            <a href="#como-funciona" className="block text-gray-300 hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Como funciona</a>
+            <a href="#faq" className="block text-gray-300 hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>FAQ</a>
+            <button className="w-full px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold rounded-lg glow-cyan">
+              Falar com o time
+            </button>
+          </motion.div>
+        )}
+      </div>
+    </motion.nav>
+  )
+}
+
+// Componente Hero
+const Hero = () => {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Coluna Esquerda - Texto */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+              <span className="text-glow">Contas blindadas</span> para sua mídia paga nunca parar.
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+              Contas de Google Ads, Meta Ads e TikTok Ads para contingência, com proxies residenciais inclusos, suporte de especialistas e entrega rápida.
+            </p>
+            
+            <ul className="space-y-4">
+              {[
+                'Contas prontas para rodar em alto volume',
+                'Proxies residenciais já configurados',
+                'Menos risco de ban, mais estabilidade',
+                'Onboarding guiado pelo nosso time'
+              ].map((item, idx) => (
+                <motion.li
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 + idx * 0.1 }}
+                  className="flex items-center space-x-3"
+                >
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full glow-emerald" />
+                  <span className="text-gray-300">{item}</span>
+                </motion.li>
+              ))}
+            </ul>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-lg glow-cyan text-lg"
+              >
+                Quero contas de contingência
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 border-2 border-cyan-500/50 text-cyan-400 font-semibold rounded-lg hover:bg-cyan-500/10 transition-all"
+              >
+                Ver todos os produtos
+              </motion.button>
+            </div>
+          </motion.div>
+
+          {/* Coluna Direita - Visual Dashboard */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="glass rounded-2xl p-8 glow-cyan border border-cyan-500/30">
+              <div className="flex flex-wrap gap-3 mb-6">
+                {['Google Ads', 'Meta Ads', 'TikTok Ads'].map((platform, idx) => (
+                  <span
+                    key={idx}
+                    className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-lg text-sm font-medium text-cyan-300"
+                  >
+                    {platform}
+                  </span>
+                ))}
+              </div>
+              
+              <div className="space-y-4">
+                {[
+                  { name: 'Google Ads', status: 'Ativa', color: 'emerald' },
+                  { name: 'Meta Ads', status: 'Pronta para usar', color: 'cyan' },
+                  { name: 'TikTok Ads', status: 'Ativa', color: 'emerald' }
+                ].map((account, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-4 bg-black/30 rounded-lg border border-cyan-500/20">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-2 h-2 rounded-full ${
+                        account.color === 'emerald' ? 'bg-emerald-400 glow-emerald' : 'bg-cyan-400 glow-cyan'
+                      }`} />
+                      <span className="text-white font-medium">{account.name}</span>
+                    </div>
+                    <span className="text-sm text-gray-400">{account.status}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 p-4 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-lg border border-cyan-500/30">
+                <p className="text-sm text-gray-300">
+                  <span className="text-cyan-400 font-semibold">Status:</span> Todas as contas verificadas e operacionais
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Faixa de Credibilidade
+const CredibilityBar = () => {
+  const items = [
+    { icon: '🔒', text: 'Proxies residenciais inclusos' },
+    { icon: '✅', text: 'Contas verificadas e testadas' },
+    { icon: '👥', text: 'Suporte humano e onboarding' },
+    { icon: '💬', text: 'Comunidade privada para clientes' }
+  ]
+
+  return (
+    <section className="py-12 px-4 sm:px-6 lg:px-8 border-y border-cyan-500/20 bg-black/40">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {items.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="text-center space-y-2"
+            >
+              <div className="text-3xl mb-2">{item.icon}</div>
+              <p className="text-sm text-gray-300">{item.text}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Seção de Produtos
+const Products = () => {
+  const products = [
+    {
+      title: 'Contas Google Ads para Contingência',
+      badge: 'Proxies residenciais inclusos',
+      tag: 'Mais vendido',
+      description: 'Contas preparadas para contingência, ideais para quem escala campanhas em alto volume.',
+      features: [
+        'Contas verificadas e aquecidas',
+        'Proxies residenciais já configurados',
+        'Suporte na configuração inicial'
+      ],
+      cta: 'Solicitar Google Ads',
+      glow: 'cyan'
+    },
+    {
+      title: 'Contas Meta Ads para Contingência',
+      badge: 'Facebook / Instagram Ads',
+      description: 'Contas estáveis para Facebook e Instagram Ads, com aquecimento prévio e alta taxa de aprovação.',
+      features: [
+        'Contas aquecidas e testadas',
+        'Foco em estabilidade e longevidade',
+        'Onboarding completo incluído'
+      ],
+      cta: 'Solicitar Meta Ads',
+      glow: 'blue'
+    },
+    {
+      title: 'Contas TikTok Ads',
+      badge: 'Tráfego pago no TikTok',
+      description: 'Contas configuradas para tráfego pago no TikTok, prontas para escala e ideais para criadores e dropshipping.',
+      features: [
+        'Otimizadas para criadores',
+        'Ideal para dropshipping',
+        'Alta performance em conversão'
+      ],
+      cta: 'Solicitar TikTok Ads',
+      glow: 'emerald'
+    },
+    {
+      title: 'Turbinar Instagram',
+      badge: 'Seguidores para credibilidade',
+      description: 'Impulsione a percepção de autoridade do seu perfil com crescimento de seguidores e métricas sociais.',
+      features: [
+        'Melhora de prova social',
+        'Aumento de credibilidade',
+        'Ideal para lançamentos'
+      ],
+      cta: 'Quero turbinar meu Instagram',
+      glow: 'cyan'
+    }
+  ]
+
+  return (
+    <section id="produtos" className="py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Nossos principais produtos</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Tudo que você precisa para manter suas campanhas rodando sem parar.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {products.map((product, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ scale: 1.02, y: -5 }}
+              className={`glass rounded-2xl p-8 relative overflow-hidden ${
+                product.glow === 'cyan' 
+                  ? 'border border-cyan-500/30 glow-cyan' 
+                  : product.glow === 'blue'
+                  ? 'border border-blue-500/30 glow-blue'
+                  : 'border border-emerald-500/30 glow-emerald'
+              }`}
+            >
+              {product.tag && (
+                <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/30 border border-emerald-500/50 rounded-full text-xs font-semibold text-emerald-300">
+                  {product.tag}
+                </div>
+              )}
+              
+              <div className="mb-4">
+                <span className="text-sm text-cyan-400 font-medium">{product.badge}</span>
+                <h3 className="text-2xl font-bold mt-2 mb-3">{product.title}</h3>
+                <p className="text-gray-300 mb-6">{product.description}</p>
+              </div>
+
+              <ul className="space-y-2 mb-6">
+                {product.features.map((feature, fIdx) => (
+                  <li key={fIdx} className="flex items-center space-x-2 text-gray-300">
+                    <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                    <span className="text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold rounded-lg transition-all ${
+                  product.glow === 'cyan' 
+                    ? 'glow-cyan' 
+                    : product.glow === 'blue'
+                    ? 'glow-blue'
+                    : 'glow-emerald'
+                }`}
+              >
+                {product.cta}
+              </motion.button>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Seção Como Funciona
+const HowItWorks = () => {
+  const steps = [
+    {
+      number: '01',
+      title: 'Você escolhe o tipo de conta que precisa',
+      description: 'Selecione entre Google Ads, Meta Ads ou TikTok Ads conforme sua necessidade de contingência.'
+    },
+    {
+      number: '02',
+      title: 'Fazemos uma validação rápida do seu cenário',
+      description: 'Nossa equipe analisa seu caso e garante que a solução seja a ideal para você.'
+    },
+    {
+      number: '03',
+      title: 'Entregamos a conta com proxies e instruções',
+      description: 'Receba tudo pronto: conta configurada, proxies residenciais e guia completo de uso.'
+    },
+    {
+      number: '04',
+      title: 'Você entra na comunidade e recebe suporte contínuo',
+      description: 'Acesso imediato ao grupo privado e suporte contínuo da nossa equipe de especialistas.'
+    }
+  ]
+
+  return (
+    <section id="como-funciona" className="py-24 px-4 sm:px-6 lg:px-8 bg-black/20">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Como funciona na prática</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Um processo simples e rápido para você ter suas contas de contingência funcionando.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {steps.map((step, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="relative"
+            >
+              {idx < steps.length - 1 && (
+                <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-cyan-500/50 to-transparent" style={{ width: 'calc(100% - 4rem)' }} />
+              )}
+              <div className="glass rounded-2xl p-6 border border-cyan-500/30 h-full">
+                <div className="text-5xl font-bold text-cyan-400/30 mb-4">{step.number}</div>
+                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">{step.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Seção Comunidade
+const Community = () => {
+  return (
+    <section id="comunidade" className="py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-glow">Comunidade Nebula</h2>
+            <p className="text-xl text-gray-300">
+              Entre em um grupo de operadores de mídia que vivem contingência todos os dias.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              Como cliente, você tem acesso exclusivo a:
+            </p>
+            <ul className="space-y-4">
+              {[
+                'Grupo privado no Discord com operadores experientes',
+                'Atualizações em tempo real sobre estratégias de contingência',
+                'Alertas sobre novos riscos e bloqueios de plataformas',
+                'Materiais exclusivos e guias avançados',
+                'Networking com outros profissionais do setor'
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full glow-emerald mt-2 flex-shrink-0" />
+                  <span className="text-gray-300">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass rounded-2xl p-8 border border-cyan-500/30 glow-cyan"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">N</span>
+                </div>
+                <div>
+                  <p className="font-semibold">Nebula Community</p>
+                  <p className="text-sm text-gray-400">Grupo privado • 1.2k membros</p>
+                </div>
+              </div>
+
+              {[
+                { name: 'Maria Silva', message: 'Acabei de receber minha conta Google Ads. Processo super rápido!', time: '2h' },
+                { name: 'João Santos', message: 'Os proxies residenciais estão funcionando perfeitamente. Valeu muito a pena!', time: '5h' },
+                { name: 'Ana Costa', message: 'Alguém já testou com TikTok Ads? Quero saber a experiência.', time: '1d' }
+              ].map((msg, idx) => (
+                <div key={idx} className="p-4 bg-black/30 rounded-lg border border-cyan-500/20">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className="w-6 h-6 bg-cyan-500/30 rounded-full" />
+                    <span className="text-sm font-medium text-cyan-300">{msg.name}</span>
+                    <span className="text-xs text-gray-500">• {msg.time}</span>
+                  </div>
+                  <p className="text-sm text-gray-300">{msg.message}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Seção Turbinar Instagram
+const InstagramBoost = () => {
+  return (
+    <section id="instagram" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-black via-slate-950 to-blue-950 relative overflow-hidden">
+      <div className="absolute inset-0 bg-cyan-500/5" />
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Turbine o Instagram do seu negócio</h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Impulsione a percepção de autoridade do seu perfil com crescimento de seguidores e métricas sociais. 
+            Ideal para lançadores, infoprodutores, e-commerces e negócios locais que precisam parecer mais sólidos desde o primeiro contato.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          {[
+            { title: 'Prova social mais forte', description: 'Perfis com mais seguidores geram mais confiança instantaneamente.' },
+            { title: 'Perfil mais atrativo', description: 'Aumente a atratividade do seu perfil para novos visitantes.' },
+            { title: 'Maior confiança de novos visitantes', description: 'Primeira impressão é fundamental no mundo digital.' }
+          ].map((benefit, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass rounded-xl p-6 border border-cyan-500/30 text-center"
+            >
+              <h3 className="text-xl font-bold mb-3 text-cyan-400">{benefit.title}</h3>
+              <p className="text-gray-300 text-sm">{benefit.description}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-12 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-lg glow-cyan text-lg"
+          >
+            Quero impulsionar meu perfil agora
+          </motion.button>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// Seção Diferenciais
+const Differentiators = () => {
+  const items = [
+    {
+      icon: '🚀',
+      title: 'Especialistas em contingência',
+      description: 'Nossa equipe vive e respira mídia paga há anos, entendendo profundamente os desafios de escala.'
+    },
+    {
+      icon: '🌐',
+      title: 'Infra com proxies residenciais',
+      description: 'Não trabalhamos com proxies datacenter. Apenas proxies residenciais de alta qualidade, inclusos em todas as contas.'
+    },
+    {
+      icon: '⚡',
+      title: 'Foco em long-term, não em gambiarras',
+      description: 'Nossas soluções são pensadas para durar. Não vendemos contas que vão quebrar em semanas.'
+    },
+    {
+      icon: '💬',
+      title: 'Suporte humano e comunidade ativa',
+      description: 'Você não está sozinho. Suporte direto da equipe e acesso a uma comunidade de operadores experientes.'
+    }
+  ]
+
+  return (
+    <section className="py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Por que escolher a Nebula</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Diferenciais que fazem a diferença na hora de proteger suas campanhas.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {items.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="glass rounded-2xl p-6 border border-cyan-500/30 text-center"
+            >
+              <div className="text-4xl mb-4">{item.icon}</div>
+              <h3 className="text-xl font-bold mb-3 text-cyan-400">{item.title}</h3>
+              <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Seção FAQ
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const faqs = [
+    {
+      question: 'Por quanto tempo a conta fica garantida?',
+      answer: 'Nossas contas são preparadas para uso de longo prazo. Oferecemos garantia de estabilidade e suporte contínuo enquanto você for cliente. Caso ocorra algum problema relacionado à qualidade da conta, trabalhamos para resolver rapidamente.'
+    },
+    {
+      question: 'Como funcionam os proxies residenciais?',
+      answer: 'Os proxies residenciais são incluídos e já configurados nas contas. Eles simulam conexões residenciais reais, reduzindo significativamente o risco de detecção pelas plataformas. Todos os proxies são de alta qualidade e rotacionados automaticamente.'
+    },
+    {
+      question: 'Preciso ter experiência com mídia paga?',
+      answer: 'Não é obrigatório, mas recomendamos conhecimento básico. Oferecemos onboarding completo e suporte da nossa equipe para ajudar na configuração inicial. Além disso, nossa comunidade é um ótimo lugar para aprender com outros operadores.'
+    },
+    {
+      question: 'Vocês oferecem suporte na configuração inicial?',
+      answer: 'Sim! Todo cliente recebe um onboarding guiado pela nossa equipe. Ajudamos na configuração inicial, explicamos como usar os proxies e damos todas as orientações necessárias para você começar a rodar suas campanhas com segurança.'
+    },
+    {
+      question: 'É possível usar as contas em qualquer nicho?',
+      answer: 'Sim, nossas contas são versáteis e podem ser usadas em diversos nichos. No entanto, recomendamos sempre seguir as políticas das plataformas e usar boas práticas de anúncios. Nossa equipe pode ajudar a avaliar se seu nicho específico tem algum risco adicional.'
+    }
+  ]
+
+  return (
+    <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-black/20">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-glow">Perguntas frequentes</h2>
+          <p className="text-xl text-gray-300">
+            Tire suas dúvidas sobre nossas contas de contingência.
+          </p>
+        </motion.div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass rounded-xl border border-cyan-500/30 overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-cyan-500/5 transition-colors"
+              >
+                <span className="font-semibold text-lg pr-4">{faq.question}</span>
+                <svg
+                  className={`w-5 h-5 text-cyan-400 transition-transform flex-shrink-0 ${
+                    openIndex === idx ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openIndex === idx && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="px-6 pb-4 text-gray-300 leading-relaxed"
+                >
+                  {faq.answer}
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// CTA Final
+const FinalCTA = () => {
+  return (
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-emerald-500/20 to-blue-500/20 blur-3xl" />
+      <div className="max-w-4xl mx-auto relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="space-y-8"
+        >
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-glow">
+            Pronto para blindar suas campanhas?
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Fale com nosso time e descubra a melhor solução de contingência para o seu negócio.
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-12 py-5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-lg glow-cyan text-xl"
+          >
+            Falar com o time agora
+          </motion.button>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// Footer
+const Footer = () => {
+  return (
+    <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-cyan-500/20 bg-black/40">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-3 h-3 bg-cyan-400 rounded-full glow-cyan" />
+              <span className="text-xl font-bold">Nebula Contingency Ads</span>
+            </div>
+            <p className="text-sm text-gray-400">
+              Contas e infraestrutura para sua mídia paga não parar.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4 text-cyan-400">Links</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
+              <li><a href="#produtos" className="hover:text-cyan-400 transition-colors">Produtos</a></li>
+              <li><a href="#comunidade" className="hover:text-cyan-400 transition-colors">Comunidade</a></li>
+              <li><a href="#como-funciona" className="hover:text-cyan-400 transition-colors">Como funciona</a></li>
+              <li><a href="#faq" className="hover:text-cyan-400 transition-colors">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4 text-cyan-400">Legal</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
+              <li><a href="#" className="hover:text-cyan-400 transition-colors">Termos de uso</a></li>
+              <li><a href="#" className="hover:text-cyan-400 transition-colors">Política de privacidade</a></li>
+              <li><a href="#" className="hover:text-cyan-400 transition-colors">Contato</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="pt-8 border-t border-cyan-500/20 text-center text-sm text-gray-400">
+          <p>© {new Date().getFullYear()} Nebula Contingency Ads. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+// Componente Principal
+export default function Home() {
+  return (
+    <main className="relative min-h-screen">
+      <BackgroundLights />
+      <Navbar />
+      <Hero />
+      <CredibilityBar />
+      <Products />
+      <HowItWorks />
+      <Community />
+      <InstagramBoost />
+      <Differentiators />
+      <FAQ />
+      <FinalCTA />
+      <Footer />
+    </main>
+  )
+}
+
