@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import Image from 'next/image'
 
 // Componente wrapper para animações elegantes no scroll
 const ScrollAnimation = ({ children, delay = 0, className = '' }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -161,11 +160,9 @@ const Hero = () => {
       >
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" />
-          <Image
-            src="/logo google ads 3d.png"
+          <img
+            src="/logo%20google%20ads%203d.png"
             alt="Google Ads"
-            width={192}
-            height={192}
             className="relative w-full h-full object-contain"
             style={{ 
               filter: 'brightness(1.2) saturate(1.3) hue-rotate(180deg) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
@@ -192,11 +189,9 @@ const Hero = () => {
       >
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <Image
-            src="/logo meta ads 3d.png"
+          <img
+            src="/logo%20meta%20ads%203d.png"
             alt="Meta Ads"
-            width={176}
-            height={176}
             className="relative w-full h-full object-contain"
             style={{ 
               filter: 'brightness(1.2) saturate(1.3) hue-rotate(120deg) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
