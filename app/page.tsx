@@ -392,9 +392,7 @@ const PlatformSelector = () => {
             ].map((item, idx) => (
               <DockItem
                 key={idx}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
+                onClick={() => {
                   item.onClick()
                 }}
                 className={`aspect-square rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-xl border ${item.borderColor} glass relative overflow-hidden touch-none`}

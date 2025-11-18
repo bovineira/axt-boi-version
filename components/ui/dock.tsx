@@ -38,7 +38,7 @@ type DockProps = {
 type DockItemProps = {
   className?: string
   children: React.ReactNode
-  onClick?: () => void
+  onClick?: (e?: React.MouseEvent | React.TouchEvent) => void
 }
 
 type DockLabelProps = {
@@ -155,10 +155,14 @@ function DockItem({ children, className, onClick }: DockItemProps) {
       onHoverEnd={() => isHovered.set(0)}
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
-      onClick={onClick}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onClick?.()
+      }}
       onTouchStart={(e) => {
         e.preventDefault()
-        onClick?.(e as any)
+        onClick?.()
       }}
       className={cn(
         'relative inline-flex items-center justify-center cursor-pointer select-none',
