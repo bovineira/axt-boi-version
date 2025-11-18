@@ -153,9 +153,11 @@ const FloatingImage = ({ src, alt, className, style, glowColor }: {
   const handleError = () => {
     if (!hasError) {
       setHasError(true)
-      // Tenta diferentes variações do nome
+      // Tenta diferentes variações do nome e extensões
       const variations = [
         src,
+        src.replace('.svg', '.png'),
+        src.replace('.png', '.svg'),
         src.replace(/-/g, ' '),
         src.replace(/-/g, '_'),
         encodeURI(src),
@@ -164,6 +166,7 @@ const FloatingImage = ({ src, alt, className, style, glowColor }: {
       const currentIndex = variations.indexOf(imgSrc)
       if (currentIndex < variations.length - 1) {
         setImgSrc(variations[currentIndex + 1])
+        setHasError(false) // Reset para tentar novamente
       }
     }
   }
@@ -207,7 +210,7 @@ const Hero = () => {
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" />
           <FloatingImage
-            src="/logo-google-ads-3d.png"
+            src="/logo-google-ads-3d.svg"
             alt="Google Ads"
             className="relative w-full h-full object-contain"
             style={{ 
@@ -236,7 +239,7 @@ const Hero = () => {
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
           <FloatingImage
-            src="/logo-meta-ads-3d.png"
+            src="/logo-meta-ads-3d.svg"
             alt="Meta Ads"
             className="relative w-full h-full object-contain"
             style={{ 
