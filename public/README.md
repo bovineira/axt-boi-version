@@ -45,3 +45,4 @@ public/
 - Otimize as imagens antes de adicionar (reduza o tamanho do arquivo)
 - Formatos recomendados: JPG, PNG, WebP, SVG
 
+

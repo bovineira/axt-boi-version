@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { Nebula } from '@/components/ui/nebula'
 
 // Componente wrapper para animações elegantes no scroll
 const ScrollAnimation = ({ children, delay = 0, className = '' }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -166,6 +167,8 @@ const FloatingImage = ({ src, alt, className, style }: {
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Nebulosa Interativa com Buraco Negro */}
+      <Nebula className="z-0" />
       {/* Imagens flutuantes */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -224,7 +227,7 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Coluna Esquerda - Texto */}
           <motion.div
