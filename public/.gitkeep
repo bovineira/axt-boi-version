@@ -1,0 +1,6 @@
+# Esta pasta é para imagens e assets estáticos
+# Adicione suas imagens aqui e use-as no código com:
+# <Image src="/nome-da-imagem.jpg" ... />
+# ou
+# <img src="/nome-da-imagem.jpg" ... />
+
