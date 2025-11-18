@@ -139,6 +139,52 @@ const Navbar = () => {
   )
 }
 
+// Componente para imagem flutuante com fallback
+const FloatingImage = ({ src, alt, className, style, glowColor }: { 
+  src: string, 
+  alt: string, 
+  className?: string, 
+  style?: React.CSSProperties,
+  glowColor?: string 
+}) => {
+  const [imgSrc, setImgSrc] = useState(src)
+  const [hasError, setHasError] = useState(false)
+
+  const handleError = () => {
+    if (!hasError) {
+      setHasError(true)
+      // Tenta diferentes variações do nome
+      const variations = [
+        src,
+        src.replace(/-/g, ' '),
+        src.replace(/-/g, '_'),
+        encodeURI(src),
+        src.toLowerCase(),
+      ]
+      const currentIndex = variations.indexOf(imgSrc)
+      if (currentIndex < variations.length - 1) {
+        setImgSrc(variations[currentIndex + 1])
+      }
+    }
+  }
+
+  if (hasError && imgSrc === src) {
+    return null // Não renderiza se todas as tentativas falharam
+  }
+
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      className={className}
+      style={style}
+      loading="eager"
+      onError={handleError}
+      onLoad={() => setHasError(false)}
+    />
+  )
+}
+
 // Componente Hero
 const Hero = () => {
   return (
@@ -160,19 +206,13 @@ const Hero = () => {
       >
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" />
-          <img
+          <FloatingImage
             src="/logo-google-ads-3d.png"
             alt="Google Ads"
             className="relative w-full h-full object-contain"
             style={{ 
               filter: 'brightness(1.2) saturate(1.3) hue-rotate(180deg) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
               mixBlendMode: 'screen'
-            }}
-            loading="eager"
-            onError={(e) => {
-              console.error('Erro ao carregar imagem Google Ads');
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
             }}
           />
         </div>
@@ -195,19 +235,13 @@ const Hero = () => {
       >
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <img
+          <FloatingImage
             src="/logo-meta-ads-3d.png"
             alt="Meta Ads"
             className="relative w-full h-full object-contain"
             style={{ 
               filter: 'brightness(1.2) saturate(1.3) hue-rotate(120deg) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
               mixBlendMode: 'screen'
-            }}
-            loading="eager"
-            onError={(e) => {
-              console.error('Erro ao carregar imagem Meta Ads');
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
             }}
           />
         </div>
