@@ -161,16 +161,18 @@ const Hero = () => {
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" />
           <img
-            src="/logo google ads 3d.png"
+            src="/logo-google-ads-3d.png"
             alt="Google Ads"
             className="relative w-full h-full object-contain"
             style={{ 
               filter: 'brightness(1.2) saturate(1.3) hue-rotate(180deg) drop-shadow(0 0 25px rgba(0, 240, 255, 0.7))',
               mixBlendMode: 'screen'
             }}
+            loading="eager"
             onError={(e) => {
+              console.error('Erro ao carregar imagem Google Ads');
               const target = e.target as HTMLImageElement;
-              target.src = encodeURI("/logo google ads 3d.png");
+              target.style.display = 'none';
             }}
           />
         </div>
@@ -194,16 +196,18 @@ const Hero = () => {
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
           <img
-            src="/logo meta ads 3d.png"
+            src="/logo-meta-ads-3d.png"
             alt="Meta Ads"
             className="relative w-full h-full object-contain"
             style={{ 
               filter: 'brightness(1.2) saturate(1.3) hue-rotate(120deg) drop-shadow(0 0 25px rgba(0, 255, 136, 0.7))',
               mixBlendMode: 'screen'
             }}
+            loading="eager"
             onError={(e) => {
+              console.error('Erro ao carregar imagem Meta Ads');
               const target = e.target as HTMLImageElement;
-              target.src = encodeURI("/logo meta ads 3d.png");
+              target.style.display = 'none';
             }}
           />
         </div>
