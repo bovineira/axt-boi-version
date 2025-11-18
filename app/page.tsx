@@ -295,7 +295,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="glass rounded-2xl p-8 glow-cyan border border-cyan-500/30">
+            <div className="glass rounded-2xl p-8 glow-cyan neon-border neon-border-glow relative overflow-hidden">
               <div className="flex flex-wrap gap-3 mb-6">
                 {[
                   { 
